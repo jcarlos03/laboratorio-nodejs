@@ -1,0 +1,10 @@
+$MouseEventSig = @"
+[DllImport("user32.dll", CharSet=CharSet.Auto, CallingConvention=CallingConvention.StdCall)]
+public static extern void mouse_event(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
+"@
+
+$MouseEvent = Add-Type -memberDefinition $MouseEventSig -name "MouseEventWinApi" -passThru
+
+[System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point(100, 100)
+$MouseEvent::mouse_event(0x00000002, 0, 0, 0, 0)
+$MouseEvent::mouse_event(0x00000004, 0, 0, 0, 0)
